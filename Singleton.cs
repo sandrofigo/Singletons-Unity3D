@@ -7,13 +7,11 @@ namespace Singletons
     /// Used for <see cref="MonoBehaviour"/>.
     /// </summary>
     /// <remarks>By default the instance is only active in the scene where it was created. To persist the instance over multiple scene loads call <see cref="DontDestroyOnLoad"/>.</remarks>
-    public abstract class Singleton<T> : MonoBehaviour where T : class
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         protected static T instance;
 
         private bool keep;
-
-        private string exclusiveScene;
 
         public static T Instance
         {
@@ -21,7 +19,10 @@ namespace Singletons
             {
                 if (instance == null)
                 {
-                    Debug.LogWarning($"The singleton ({typeof(T).Name}) you were trying to access was not part of the scene! Add the component to a game object first and try again.");
+                    instance = FindObjectOfType<T>();
+
+                    if (instance == null)
+                        Debug.LogError($"The singleton ({typeof(T).Name}) you were trying to access was not part of the scene! Add the component to a game object in the scene and try again.");
                 }
 
                 return instance;
@@ -46,26 +47,12 @@ namespace Singletons
         {
             if (!keep)
                 instance = null;
-
-            if (!string.IsNullOrEmpty(exclusiveScene))
-            {
-                if (this == null)
-                    return;
-
-                Destroy(gameObject);
-                instance = null;
-            }
         }
 
         protected void DontDestroyOnLoad()
         {
             DontDestroyOnLoad(gameObject);
             keep = true;
-        }
-
-        protected void SetExclusiveScene(string sceneName)
-        {
-            exclusiveScene = sceneName;
         }
     }
 }
