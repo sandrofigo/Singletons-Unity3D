@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 namespace Singletons
 {
+    /// <summary>
+    /// Used for <see cref="MonoBehaviour"/>.
+    /// </summary>
+    /// <remarks>By default the instance is only active in the scene where it was created. To persist the instance over multiple scene loads call <see cref="DontDestroyOnLoad"/>.</remarks>
     public abstract class Singleton<T> : MonoBehaviour where T : class
     {
         protected static T instance;
