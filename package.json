@@ -1,10 +1,10 @@
 {
     "author": "Sandro Figo (https://sandrofigo.com)",
     "description": "Singleton classes for Unity",
-    "displayName": "Singleton",
+    "displayName": "Singletons",
     "license": "Unlicense",
     "name": "com.sandrofigo.singletons-unity3d",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "dependencies": {
     }
   }
